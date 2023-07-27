@@ -1,0 +1,4 @@
+name: User Plugin
+machine_name: user_plugin
+description: User management plugin
+service_provider: Dangkhoa\Plugins\User\src\Providers\UserServiceProvider

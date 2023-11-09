@@ -1,6 +1,6 @@
 <?php
 
-use Dangkhoa\Plugins\User\src\Controllers\Api\User\Auth\AuthController;
+use Dangkhoa\Plugins\User\src\Http\Controllers\Api\User\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->as('auth.')->group(function () {

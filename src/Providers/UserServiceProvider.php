@@ -2,9 +2,11 @@
 
 namespace Dangkhoa\Plugins\User\src\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Dangkhoa\PluginManager\Providers\BaseServiceProvider;
+use Dangkhoa\Plugins\User\src\Models\User;
+use Illuminate\Support\Facades\Route;
 
-class UserServiceProvider extends ServiceProvider
+class UserServiceProvider extends BaseServiceProvider
 {
     /**
      * Register any application services.
@@ -24,6 +26,22 @@ class UserServiceProvider extends ServiceProvider
         require_once __DIR__ . '/../Constant/user_constant.php';
 
         $this->registerRoute();
+
+        $this->registerMenu([
+            [
+                'label' => 'Users',
+                'icon' => 'fas fa-user',
+                'route_name' => 'user_plugin.user.*',
+                'priority' => 2,
+                'children' => [
+                    [
+                        'label' => 'User list',
+                        'icon' => 'fas fa-user',
+                        'route_name' => 'user_plugin.user.index',
+                    ],
+                ],
+            ]
+        ]);
     }
 
     /**
@@ -33,13 +51,12 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'user_plugin');
 
         $this->publishes([
             __DIR__ . '/../../database/migrations' => base_path('database/migrations/plugin_manager/user_plugin'),
         ], 'plugin_user_migration');
-   
 
         // $this->publishes([
         //     __DIR__ . '/../../config/sanctum.php' => config_path('sanctum.php'),
@@ -48,6 +65,8 @@ class UserServiceProvider extends ServiceProvider
         // $this->publishes([
         //     __DIR__ . '/../../config/auth.php' => config_path('auth.php'),
         // ], 'plugin_user_auth_config');
+
+        parent::boot();
     }
 
     /**

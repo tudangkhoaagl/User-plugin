@@ -1,18 +1,18 @@
 <?php
 
-namespace Dangkhoa\Plugins\User\src\Controllers\Api\User\Auth;
-use Dangkhoa\PluginManager\Controllers\BaseController;
+namespace Dangkhoa\Plugins\User\src\Http\Controllers\Api\User\Auth;
+use Dangkhoa\PluginManager\Http\Controllers\BaseController;
 use Dangkhoa\Plugins\User\src\Requests\UserLoginRequest;
 use Dangkhoa\Plugins\User\src\Resources\Api\Auth\UserLoginResource;
 use Dangkhoa\Plugins\User\src\Service\AuthService;
-use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class AuthController extends BaseController
 {
     /**
      * Summary of __construct
-     * 
+     *
      * @param AuthService $authService
      */
     public function __construct(

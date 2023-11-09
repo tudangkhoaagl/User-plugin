@@ -2,13 +2,13 @@
 
 namespace Dangkhoa\Plugins\User\src\Providers;
 
-use Dangkhoa\PluginManager\Providers\RouteServiceProvider as ServiceProvider;
+use Dangkhoa\PluginManager\Providers\RouteServiceProvider as PluginRouteServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
-class RouteServiceProvider extends ServiceProvider
+class RouteServiceProvider extends PluginRouteServiceProvider
 {
     /**
      * The path to your application's "home" route.

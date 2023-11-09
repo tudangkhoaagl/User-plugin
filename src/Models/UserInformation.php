@@ -21,7 +21,6 @@ class UserInformation extends Model
      * Summary of user
      *
      * @return BelongsTo
-     *
      */
     public function user(): BelongsTo
     {

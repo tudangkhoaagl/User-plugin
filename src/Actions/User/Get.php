@@ -16,6 +16,6 @@ class Get
      */
     public function __invoke(): Builder|Collection
     {
-        return User::with('userInformation')->get();
+        return User::with('avatar')->get();
     }
 }

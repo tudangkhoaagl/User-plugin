@@ -4,6 +4,10 @@ namespace Dangkhoa\Plugins\User\src\Providers;
 
 use Dangkhoa\PluginManager\Providers\BaseServiceProvider;
 use Dangkhoa\Plugins\User\src\Models\User;
+use Dangkhoa\Plugins\User\src\Models\UserInformation;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 class UserServiceProvider extends BaseServiceProvider
@@ -53,6 +57,20 @@ class UserServiceProvider extends BaseServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'user_plugin');
+
+        if (class_exists(\Dangkhoa\Plugins\Media\src\Models\Media::class)) {
+            Builder::macro('avatar', function () {
+                $media = DB::table('plugins')
+                    ->where('machine_name', 'media_plugin')
+                    ->where('status', PLUGIN_STATUS_ENABLE)
+                    ->first();
+                if ($this->getModel() instanceof User && $media) {
+                    return $this->getModel()->morphMany(\Dangkhoa\Plugins\Media\src\Models\Media::class, 'model');
+                }
+
+                throw new \Exception('Relation media method not exist in your Model');
+            });
+        }
 
         $this->publishes([
             __DIR__ . '/../../database/migrations' => base_path('database/migrations/plugin_manager/user_plugin'),
